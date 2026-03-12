@@ -139,7 +139,7 @@ awk can filter lines based on column values and manipulate output. For example, 
 - printf 'a 50 x\nb 150 y\nc 200 z\n' | awk '$2 > 100 {print $3, $2, $1}'
 
 
-- Dissect the SSH log pipeline from the lecture: what does each step do? Then build something similar to find your most-used shell commands from ~/.bash_history (or ~/.zsh_history).
+Dissect the SSH log pipeline from the lecture: what does each step do? Then build something similar to find your most-used shell commands from ~/.bash_history (or ~/.zsh_history).
 
 ```
 ssh myserver 'journalctl -u sshd -b-1 | grep "Disconnected from"' \
