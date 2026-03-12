@@ -1,19 +1,13 @@
 - What does the -l flag to ls do? Run ls -l / and examine the output. What do the first 10 characters of each line mean? (Hint: man ls):
-
 The -l flag returns the name of each file in the current directory along with informations about them: permissions, user who created the file, date and hour of creation.
 
-
 - In the command find ~/Downloads -type f -name "*.zip" -mtime +30, the *.zip is a “glob”. What is a glob? Create a test directory with some files and experiment with patterns like ls *.txt, ls file?.txt, and ls {a,b,c}.txt. See Pattern Matching in the Bash manual. 
-
 A “glob” is a way for the interpreter to autocomplete the file path and find each file ending the specified file extension, such as *.zip or *.txt.
 
-
 - What’s the difference between 'single quotes', "double quotes", and $'ANSI quotes'? Write a command that echoes a string containing a literal $, a !, and a newline character. See Quoting. 
-
 Enclosing characters in single quotes (‘'’) preserves the literal value of each character within the quotes.
 Enclosing characters in double quotes (‘"’) preserves the literal value of all characters within the quotes, with the exception of ‘$’, ‘`’, ‘\’, and, when history expansion is enabled, ‘!’.
 Character sequences of the form $'string' are treated as a special kind of single quotes. The sequence expands to string, with backslash-escaped characters in string replaced as specified by the ANSI C standard.
-
 Some testing:
 matteo@PC-di-Matteo:~$ ls
 cartella_prova
@@ -23,58 +17,43 @@ Ciao mondols
 matteo@PC-di-Matteo:~$ echo "Ciao mondo!!"
 echo "Ciao mondoecho "Ciao mondols""
 Ciao mondoecho Ciao mondols
-
 matteo@PC-di-Matteo:~$ echo 'Ciao mondo!!'
 Ciao mondo!!
-
 matteo@PC-di-Matteo:~$ echo $'Ciao mondo!!'
 Ciao mondo!!
-
 matteo@PC-di-Matteo:~$ echo "Ciao \\ mondo"
 Ciao \ mondo
-
 matteo@PC-di-Matteo:~$ echo "Ciao \$ mondo"
 Ciao $ mondo
 
-
 - The shell has three standard streams: stdin (0), stdout (1), and stderr (2). Run ls /nonexistent /tmp and redirect stdout to one file and stderr to another. How would you redirect both to the same file? See Redirections. 
-
 Separate files:  ls /nonexistent /tmp 1>file1.txt 2>file2.txt
 Both in the same file:  ls /nonexistent /tmp &>samefile.txt
 
-
-- $? holds the exit status of the last command (0 = success). && runs the next command only if the previous succeeded; || runs it only if the previous failed. Write a one-liner that creates /tmp/mydir only if it doesn’t already exist. See Exit Status. 
-
+- $? holds the exit status of the last command (0 = success). && runs the next command only if the previous succeeded; || runs it only if the previous failed. Write a one-liner that creates /tmp/mydir only if it doesn’t already exist. See Exit Status.
+'''
+#!/bin/bash
 [ -d /tmp/mydir ] || mkdir /tmp/mydir
-
+'''
 
 - Why does cd have to be built into the shell itself rather than a standalone program? (Hint: think about what a child process can and cannot affect in its parent.)
-
 A child process operates in its own space in memory and can’t change the parent’s internal state such as variables, working directory and shell options.
 If cd was a standalone program, it would create a child process and only change the directory in that process.
 
-
 - Write a script that takes a filename as an argument ($1) and checks whether the file exists using test -f or [ -f ... ]. It should print different messages depending on whether the file exists. See Bash Conditional Expressions. 
-
+'''
 #!/bin/bash
 if [ -f “$1” ]; then echo "File found"; else echo "File not found";fi
-
+'''
 
 - Save the script from the previous exercise to a file (e.g., check.sh). Try running it with ./check.sh somefile. What happens? Now run chmod +x check.sh and try again. Why is this step necessary? (Hint: look at ls -l check.sh before and after the chmod.) 
-
 Without using chmod +x, we get “Permission denied”. Using chmod +x we give the user permission to execute the selected file. Before, the user only had rw(read and write) permissions.
 
-
 - What happens if you add -x to the set flags in a script? Try it with a simple script and observe the output. See The Set Builtin.
-
 It prints out to the terminal the lines that get executed.
 
-
-- Write a command that copies a file to a backup with today’s date in the filename (e.g., notes.txt → notes_2026-01-12.txt). (Hint: $(date +%Y-%m-%d)). See Command Substitution. 
-
-
-
-
+- Write a command that copies a file to a backup with today’s date in the filename (e.g., notes.txt → notes_2026-01-12.txt). (Hint: $(date +%Y-%m-%d)). See Command Substitution.
+'''
 #!/bin/bash
 
 if [ -f "$1.$2" ];
@@ -83,10 +62,9 @@ then
 else 
  echo "File not found"
 fi
+'''
 
-
-- Modify the flaky test script from the lecture to accept the test command as an argument instead of hardcoding cargo test my_test. (Hint: $1 or $@). See Special Parameters. 
-
+- Modify the flaky test script from the lecture to accept the test command as an argument instead of hardcoding cargo test my_test. (Hint: $1 or $@). See Special Parameters. '''
 #!/bin/bash
 set -euo pipefail
 
@@ -111,13 +89,11 @@ echo "Test failed on run $RUN"
 echo "Last 20 lines of output:"
 tail -n 20 "$LOGFILE"
 echo "Full log: $LOGFILE"
+'''
 
 - Use pipes to find the 5 most common file extensions in your home directory. (Hint: combine find, grep or sed or awk, sort, uniq -c, and head.) 
-
 find ~ -type f -name "*.*" → find each file in the home directory ~ 
-
 awk -F. '{print $NF}'  → separate in columns using “.” (file.txt has file as the first column and txt as the second column). $NF takes the last “.” of the file to ensure it only extracts the file extensions.
-
 find ~ -type f -name "*.*" | awk -F. '{print $NF}' | sort | uniq -c | sort -rn | head -5
 
 - xargs converts lines from stdin into command arguments. Use find and xargs together (not find -exec) to find all .sh files in a directory and count the lines in each with wc -l. Bonus: make it handle filenames with spaces. (Hint: -print0 and -0). See man xargs. 
