@@ -33,8 +33,10 @@ Ciao $ mondo
 
 
 The shell has three standard streams: stdin (0), stdout (1), and stderr (2). Run ls /nonexistent /tmp and redirect stdout to one file and stderr to another. How would you redirect both to the same file? See Redirections. 
+```
 - Separate files:  ls /nonexistent /tmp 1>file1.txt 2>file2.txt
 - Both in the same file:  ls /nonexistent /tmp &>samefile.txt
+```
 
 
 $? holds the exit status of the last command (0 = success). && runs the next command only if the previous succeeded; || runs it only if the previous failed. Write a one-liner that creates /tmp/mydir only if it doesn’t already exist. See Exit Status.
@@ -120,8 +122,9 @@ find ~ -type f -name "*.*" | awk -F. '{print $NF}' | sort | uniq -c | sort -rn |
 
 
 xargs converts lines from stdin into command arguments. Use find and xargs together (not find -exec) to find all .sh files in a directory and count the lines in each with wc -l. Bonus: make it handle filenames with spaces. (Hint: -print0 and -0). See man xargs.
-
-- find . -name "*.sh" -type f -print0 | xargs -0 wc -l
+```
+find . -name "*.sh" -type f -print0 | xargs -0 wc -l
+```
 
 
 Use curl to fetch the HTML of the course website (https://missing.csail.mit.edu/) and pipe it to grep to count how many lectures are listed. (Hint: look for a pattern that appears once per lecture; use curl -s to silence the progress output.) 
@@ -137,8 +140,9 @@ jq is a powerful tool for processing JSON data. Fetch the sample data at https:/
 
 
 awk can filter lines based on column values and manipulate output. For example, awk '$3 ~ /pattern/ {$4=""; print}' prints only lines where the third column matches pattern, while omitting the fourth column. Write an awk command that prints only lines where the second column is greater than 100, and swaps the first and third columns. Test with: printf 'a 50 x\nb 150 y\nc 200 z\n' 
-
-- printf 'a 50 x\nb 150 y\nc 200 z\n' | awk '$2 > 100 {print $3, $2, $1}'
+```
+printf 'a 50 x\nb 150 y\nc 200 z\n' | awk '$2 > 100 {print $3, $2, $1}'
+```
 
 
 Dissect the SSH log pipeline from the lecture: what does each step do? Then build something similar to find your most-used shell commands from ~/.bash_history (or ~/.zsh_history).
@@ -175,8 +179,9 @@ postgres,mysql,oracle,dell,ubuntu,inspur,test,admin,user,root
 To find the most used commands from ~/.bash_history:
 ```
 awk -F '[|; ]+' '{print $1}' ~/.bash_history | sort | uniq -c | sort -rn | head
-to include the recent history:
+
+To include the recent history:
 history | awk -F '[|; ]+' '{print $3}' | sort | uniq -c | sort -rn | head
-→ not every command present in pipes will be included, just the first one (for ex,
-awk … | sort will only count awk)
+
+→ not every command present in pipes will be included, just the first one (for ex, awk … | sort will only count awk)
 ```
