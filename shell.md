@@ -8,7 +8,7 @@ In the command find ~/Downloads -type f -name "*.zip" -mtime +30, the *.zip is a
 - A “glob” is a way for the interpreter to autocomplete the file path and find each file ending the specified file extension, such as *.zip or *.txt.
 
 
-```What’s the difference between 'single quotes', "double quotes", and $'ANSI quotes'? Write a command that echoes a string containing a literal $, a !, and a newline character. See Quoting.```  
+What’s the difference between ``` 'single quotes', "double quotes", and $'ANSI quotes'? ``` Write a command that echoes a string containing a literal $, a !, and a newline character. See Quoting.
 - Enclosing characters in single quotes (‘'’) preserves the literal value of each character within the quotes.
 - Enclosing characters in double quotes (‘"’) preserves the literal value of all characters within the quotes, with the exception of ‘$’, ‘`’, ‘\’, and, when history expansion is enabled, ‘!’.
 - Character sequences of the form $'string' are treated as a special kind of single quotes. The sequence expands to string, with backslash-escaped characters in string replaced as specified by the ANSI C standard.
