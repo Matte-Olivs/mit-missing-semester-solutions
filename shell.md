@@ -165,23 +165,23 @@ postgres,mysql,oracle,dell,ubuntu,inspur,test,admin,user,root
 
 - ssh myserver tries to connect to “myserver” using secure shell
 - journalctl is used to print log entries from the systemd journal, with:
-	-u showing messages for the specified systemd unit UNIT
- 	-b showing messages from a specific boot(1 here)
+	- -u showing messages for the specified systemd unit UNIT
+	- -b showing messages from a specific boot(1 here)
 - grep prints the lines that match the pattern “Disconnected from”
 - sed formats the given lines, with:
-	-E specifying to use extended regular expressions in the script
-	/s attempting to match regexp against the pattern space 	special
-	\1 refers to the corresponding matching sub-	expression
+	- -E specifying to use extended regular expressions in the script
+	- /s attempting to match regexp against the pattern space 	special
+	- \1 refers to the corresponding matching sub-	expression
 - sort sorts lines by name
 - uniq -c prefixes lines by the number of occurences
 -  sort -nk1,1
-	-n numeric sort, using the first column
-	-k sort via key, using the first column
+	- n numeric sort, using the first column
+	- k sort via key, using the first column
 - tail n10 prints the last 10 lines of each FILE to standard output.
 - awk '{print $2}' prints the second column of each line
 - paste -sd merges the given lines, with:
-	-s  paste one line at a time instead of in parallel
-	-d  reuse characters from LIST instead of TABs, using the following list: 	postgres,mysql,oracle,dell,ubuntu,inspur,test,admin,user,root
+	- s  paste one line at a time instead of in parallel
+	- d  reuse characters from LIST instead of TABs, using the following list: 	postgres,mysql,oracle,dell,ubuntu,inspur,test,admin,user,root
 
 → To find the most used commands from ~/.bash_history:
 ```
