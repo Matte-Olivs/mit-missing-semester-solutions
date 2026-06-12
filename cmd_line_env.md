@@ -4,7 +4,7 @@
 
 You might see commands like cmd --flag -- --notaflag. The -- is a special argument that tells the program to stop parsing flags. Everything after -- is treated as a positional argument. Why might this be useful? Try running touch -- -myfile and then removing it without --.
 
-- It's useful for those file names that may contain special symbols such as -. See the example:
+- It's useful for those file names that may contain special symbols such as ```-```. See the example:
 ```
 matteo@PC-di-Matteo:~/missing_semester/cmd_line$ touch -- -myfile
 matteo@PC-di-Matteo:~/missing_semester/cmd_line$ ls
@@ -23,12 +23,10 @@ matteo@PC-di-Matteo:~/missing_semester/cmd_line$ rm -- -myfile
 
 
 Read man ls and write an ls command that lists files in the following manner:
-```
-Includes all files, including hidden files
-Sizes are listed in human readable format (e.g. 454M instead of 454279954)
-Files are ordered by recency
-Output is colorized
-```
+- Includes all files, including hidden files.
+- Sizes are listed in human readable format (e.g. 454M instead of 454279954)
+- Files are ordered by recency
+- Output is colorized
 
 A sample output would look like this:
 ```
@@ -41,6 +39,7 @@ drwx------+ 47 user group 1.5K Jan 12 18:08 ..
 - a, list all
 - lt, sort by the latest modifidied file
 - h, human readable format
+
 ```
 ls -a -lt -h --color 
 ```
@@ -150,7 +149,7 @@ pidwait () {
 }
 
 terminal: pidwait pid
--> pid is "$1" = arg1
+→ pid is "$1" = arg1
 ```
 
 
@@ -162,12 +161,38 @@ terminal: pidwait pid
 ```
 #!/usr/bin/env bash
 
-find "$(pwd)" -type f -printf "%C@\t%CF %CX\t%p\n" | sort -rn | head -1 | awk -F'\t' '{print $2, $3, $4}'
+find "$(pwd)" -type f -printf "%C@\t%CF %CH:%CM\t%p\n" | sort -rn | head -1 | awk -F'\t' '{print $2, $3, $4}'
 ```
 
 → All files
 ```
 #!/usr/bin/env bash
 
-find "$(pwd)" -type f -printf "%C@\t%CF %CX\t%p\n" | sort -rn | awk -F'\t' '{print $2, $3, $4}' 
+find "$(pwd)" -type f -printf "%C@\t%CF %CH:%CM\t%p\n" | sort -rn | awk -F'\t' '{print $2, $3, $4}' 
 ```
+
+
+### Aliases and Dotfiles
+
+Create an alias dc that resolves to cd for when you type it wrong.
+```
+alias dc="cd"
+```
+
+
+Create a folder for your dotfiles and set up version control.
+- Local version control setup using git:
+```
+matteo@PC-di-Matteo:~/dotfiles$ git init
+Initialized empty Git repository in /home/matteo/dotfiles/.git/
+matteo@PC-di-Matteo:~/dotfiles$ git add .
+matteo@PC-di-Matteo:~/dotfiles$ git commit -m "My dotfiles"
+[master (root-commit) 485b3d1] My dotfiles
+ 3 files changed, 68 insertions(+)
+ create mode 100644 .bash_aliases
+ create mode 100644 .tmux.conf
+ create mode 100644 .vimrc
+```
+
+
+Add a configuration for at least one program, e.g. your shell, with some customization (to start off, it can be something as simple as customizing your shell prompt by setting $PS1).
